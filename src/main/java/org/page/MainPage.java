@@ -14,7 +14,7 @@ public class MainPage {
     protected SelenideElement generalMenu = $(By.xpath("//p[@class=\"menu-label\" and contains(text(),'General menu')]"));
 
     public void openMainPage() {
-        open("http://172.190.77.9:3000/");
+        open("http://172.191.123.103:3000/");
         mainPageTitle.shouldHave(partialText("Catalog"));
     }
 

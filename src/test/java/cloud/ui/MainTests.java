@@ -2,11 +2,16 @@ package cloud.ui;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static java.lang.String.CASE_INSENSITIVE_ORDER;
 
 public class MainTests extends BaseTest {
 
@@ -48,5 +53,25 @@ public class MainTests extends BaseTest {
         $(By.xpath("//select[@name=\"ingredient_id\"]")).getOptions().last().click();
         submitButton.click();
         $$(By.xpath("//table[@class=\"table\"]/tbody/tr")).last().shouldHave(partialText("Carbonara (1 ing.)"));
+    }
+
+    @Test
+    public void sortingFromAtoZVerification() {
+        mainPage.openMainPage();
+        $(By.xpath("//a[@href=\"/?page=0&sorting=1\"]")).click();
+        List<String> actualSortingFromAtoZ = $$(By.xpath("//section//div[@class=\"columns\"]//h1[@class=\"title\"]")).stream().map(SelenideElement::getText).toList();
+        List<String> expectedSortingFromAtoZ = new ArrayList<>(actualSortingFromAtoZ);
+        expectedSortingFromAtoZ.sort(CASE_INSENSITIVE_ORDER);
+        Assert.assertEquals(actualSortingFromAtoZ, expectedSortingFromAtoZ);
+    }
+
+    @Test
+    public void sortingFromZtoAVerification() {
+        mainPage.openMainPage();
+        $(By.xpath("//a[@href=\"/?page=0&sorting=2\"]")).click();
+        List<String> actualSortingFromZtoA = $$(By.xpath("//section//div[@class=\"columns\"]//h1[@class=\"title\"]")).stream().map(SelenideElement::getText).toList();
+        List<String> expectedSortingFromZtoA = new ArrayList<>(actualSortingFromZtoA);
+        expectedSortingFromZtoA.sort(CASE_INSENSITIVE_ORDER.reversed());
+        Assert.assertEquals(actualSortingFromZtoA, expectedSortingFromZtoA);
     }
 }
