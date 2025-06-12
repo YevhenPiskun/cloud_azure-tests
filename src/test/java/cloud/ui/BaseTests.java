@@ -2,6 +2,6 @@ package cloud.ui;
 
 import org.page.MainPage;
 
-public class BaseTest {
+public class BaseTests {
     protected MainPage mainPage = new MainPage();
 }

@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static java.lang.String.CASE_INSENSITIVE_ORDER;
 
-public class SortingTests extends BaseTest {
+public class SortingTests extends BaseTests {
 
     ElementsCollection firstColumnTitles = $$(By.xpath("//section//div[@class=\"column\"][1]//h1[@class=\"title\"]"));
     ElementsCollection secondColumnTitles = $$(By.xpath("//section//div[@class=\"column\"][2]//h1[@class=\"title\"]"));
