@@ -1,8 +1,6 @@
 package cloud.api;
 
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -10,13 +8,15 @@ import static io.restassured.RestAssured.given;
 
 public class ApiTests {
 
+    private static final String BASE_URL = "http://172.190.128.124:3000";
+
     @Test
     public void openMainPage() {
 
-        given()
+        given().baseUri(BASE_URL)
                 .when()
                 .log().all()
-                .get("http://74.235.226.100:3000/")
+                .get("/")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -26,33 +26,117 @@ public class ApiTests {
     }
 
     @Test
-    public void addNewIngredient() {
-
-        String ingredient = String.format("Salmon%s", RandomStringUtils.randomAlphanumeric(6));
+    public void addNewIngredientAndAddItToNewPizza() {
 
         given()
-                .queryParam("title", ingredient)
-                .queryParam("description", ingredient + " fish")
+                .baseUri(BASE_URL)
+                .formParam("title", "Salmon")
+                .formParam("description", "Salmon fish")
                 .when()
                 .log().all()
-                .post("http://74.235.226.100:3000/ingredients/create")
+                .post("/ingredients/create")
                 .then()
                 .log().all()
                 .statusCode(302)
+                .contentType(ContentType.JSON)
                 .extract()
                 .response();
 
-        Response response =
+        String responseIngredients =
                 given()
+                        .baseUri(BASE_URL)
                         .when()
                         .log().all()
-                        .get("http://74.235.226.100:3000/ingredients")
+                        .get("/ingredients")
                         .then()
                         .log().all()
                         .statusCode(200)
                         .extract()
-                        .response();
+                        .response()
+                        .asPrettyString();
 
-        Assert.assertTrue(response.getBody().prettyPrint().contains(ingredient));
+        Assert.assertTrue(responseIngredients.contains("Salmon"));
+
+        given()
+                .baseUri(BASE_URL)
+                .formParam("title", "Carbonara")
+                .when()
+                .log().all()
+                .post("/pizzas/create")
+                .then()
+                .log().all()
+                .statusCode(302)
+                .contentType(ContentType.JSON)
+                .extract()
+                .response();
+
+        given()
+                .baseUri(BASE_URL)
+                .formParam("pizza_id", "10")
+                .formParam("ingredient_id", "12")
+                .when()
+                .log().all()
+                .post("/pizzas/add_ingredient")
+                .then()
+                .log().all()
+                .statusCode(302)
+                .contentType(ContentType.JSON)
+                .extract()
+                .response();
+
+        String responsePizza =
+                given()
+                        .baseUri(BASE_URL)
+                        .when()
+                        .log().all()
+                        .get("/pizzas")
+                        .then()
+                        .log().all()
+                        .statusCode(200)
+                        .contentType(ContentType.HTML)
+                        .extract()
+                        .response()
+                        .asPrettyString();
+
+        Assert.assertTrue(responsePizza.contains("Carbonara (1 ing.)"));
+    }
+
+    @Test
+    public void getPizzas() {
+
+        String expectedString = "# Usage:\n" +
+                "\n" +
+                "GET /\n" +
+                " * Returns this message\n" +
+                "\n" +
+                "POST /\n" +
+                " * Returns report with provided inputs\n" +
+                " * Sample request body:\n" +
+                "    {\n" +
+                "        \"Pizzas\": [\n" +
+                "            {\n" +
+                "                \"Name\": \"Xavier\",\n" +
+                "                \"Ingredients\": [\"Onion\", \"Jam\", \"Cheese\"]\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"Name\": \"Yvonne\",\n" +
+                "                \"Ingredients\": [\"Ketchup\", \"Cheese\"]\n" +
+                "            }            \n" +
+                "        ]\n" +
+                "    }\n" +
+                "    ";
+
+        String responseString = given()
+                .baseUri(BASE_URL)
+                .when()
+                .log().all()
+                .get("/")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .response().asString();
+
+        Assert.assertEquals(responseString, expectedString);
     }
 }
