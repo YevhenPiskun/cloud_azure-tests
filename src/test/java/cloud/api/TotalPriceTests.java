@@ -42,6 +42,7 @@ public class TotalPriceTests extends BaseApiTests {
         ingredientItem2.setQuantity(1);
 
         ingredientsRequest.setIngredients(List.of(ingredientItem1, ingredientItem2));
+        ingredientsRequest.setRegion("Aurelia");
 
         PriceResponse response = given().baseUri(BASE_URL)
                 .contentType(ContentType.JSON)

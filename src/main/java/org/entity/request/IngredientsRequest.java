@@ -8,6 +8,9 @@ import java.util.List;
 @Data
 public class IngredientsRequest {
 
+    @JsonProperty("Region")
+    private String region;
+
     @JsonProperty("Ingredients")
     private List<IngredientItem> ingredients;
 }
