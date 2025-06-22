@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
-public class MainTests extends BaseUiTests {
+public class MainPageTests extends BaseUiTests {
 
     SelenideElement submitButton = $(By.xpath("//button[@type=\"submit\"]"));
     SelenideElement titleField = $(By.xpath("//input[@name=\"title\"]"));

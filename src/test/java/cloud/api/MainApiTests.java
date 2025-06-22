@@ -6,9 +6,7 @@ import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
-public class ApiTests {
-
-    private static final String BASE_URL = "http://172.190.128.124:3000";
+public class MainApiTests extends BaseApiTests {
 
     @Test
     public void openMainPage() {

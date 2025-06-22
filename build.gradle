@@ -12,7 +12,10 @@ repositories {
 dependencies {
     implementation 'io.rest-assured:rest-assured:5.5.2'
     implementation 'com.codeborne:selenide:7.9.3'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
     testImplementation 'org.testng:testng:7.9.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.1'
 }
 
 test {

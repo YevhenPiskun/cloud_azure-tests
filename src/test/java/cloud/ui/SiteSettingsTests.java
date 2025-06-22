@@ -29,9 +29,15 @@ public class SiteSettingsTests extends BaseUiTests {
         $(By.xpath("//a[@href=\"/settings\"]")).shouldHave(text("Site Settings")).click();
         $(By.xpath("//input[@name=\"Catalog - number of columns\"]")).setValue("3");
         String columnsPerPage = $(By.xpath("//input[@name=\"Catalog - number of columns\"]")).getValue();
+        $(By.xpath("//button[@type=\"submit\"]")).click();
         int expectedColumnsPerPage = Integer.parseInt(Objects.requireNonNull(columnsPerPage));
         $(By.xpath("//a[@href=\"/\"]")).shouldHave(text("Pizza Catalog")).click();
         int actualColumnsPerPage = $$(By.xpath("//div[@class=\"column\"]")).size();
+
         Assert.assertEquals(actualColumnsPerPage, expectedColumnsPerPage);
+
+        $(By.xpath("//a[@href=\"/settings\"]")).shouldHave(text("Site Settings")).click();
+        $(By.xpath("//input[@name=\"Catalog - number of columns\"]")).setValue("2");
+        $(By.xpath("//button[@type=\"submit\"]")).click();
     }
 }
