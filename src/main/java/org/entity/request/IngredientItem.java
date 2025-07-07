@@ -10,4 +10,6 @@ public class IngredientItem {
     private int quantity;
     @JsonProperty("Name")
     private String name;
+    @JsonProperty("Price")
+    private double price;
 }

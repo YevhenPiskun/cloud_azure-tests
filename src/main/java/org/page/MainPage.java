@@ -2,6 +2,8 @@ package org.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
+import org.config.ConfigHolder;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.partialText;
@@ -14,7 +16,8 @@ public class MainPage {
     protected SelenideElement generalMenu = $(By.xpath("//p[@class=\"menu-label\" and contains(text(),'General menu')]"));
 
     public void openMainPage() {
-        open("http://172.191.15.220:3000/");
+        open(ConfigHolder.getInstance().applicationIp());
+        WebDriverRunner.getWebDriver().manage().window().maximize();
         mainPageTitle.shouldHave(partialText("Catalog"));
     }
 

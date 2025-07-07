@@ -43,8 +43,12 @@ public class MainPageTests extends BaseUiTests {
         titleField.setValue("Carbonara");
         submitButton.click();
         $(By.xpath("//a[@href=\"/pizzas\" and text()='List']")).click();
-        $$(By.xpath("//table[@class=\"table\"]/tbody/tr")).last().shouldHave(partialText("Carbonara (0 ing.)"));
-        $(By.xpath("//table[@class=\"table\"]/tbody/tr[last()]//a[@data-title=\"Carbonara\" and contains(text(),'Add ingredient')]")).click();
+        $$(By.xpath("//table[@class=\"table\"]/tbody/tr"))
+                .get($$(By.xpath("//table[@class=\"table\"]/tbody/tr")).size() - 2)
+                .shouldHave(partialText("Carbonara (0 ing.)"));
+        $$(By.xpath("//table[@class=\"table\"]/tbody/tr"))
+                .get($$(By.xpath("//table[@class=\"table\"]/tbody/tr")).size() - 2)
+                .$(By.xpath("//a[@data-title=\"Carbonara\" and contains(text(),'Add ingredient')]")).click();
         $(By.xpath("//select[@name=\"ingredient_id\"]")).getOptions().last().click();
         submitButton.click();
         $$(By.xpath("//table[@class=\"table\"]/tbody/tr")).last().shouldHave(partialText("Carbonara (1 ing.)"));

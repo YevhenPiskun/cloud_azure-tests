@@ -11,7 +11,9 @@ public class MainApiTests extends BaseApiTests {
     @Test
     public void openMainPage() {
 
-        given().baseUri(BASE_URL)
+        given()
+                .baseUri(BASE_URL)
+                .queryParam("code", KEY)
                 .when()
                 .log().all()
                 .get("/")
@@ -32,7 +34,7 @@ public class MainApiTests extends BaseApiTests {
                 .formParam("description", "Salmon fish")
                 .when()
                 .log().all()
-                .post("/ingredients/create")
+                .post("ingredients/create")
                 .then()
                 .log().all()
                 .statusCode(302)

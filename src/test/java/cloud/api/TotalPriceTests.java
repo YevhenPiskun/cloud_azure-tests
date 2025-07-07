@@ -12,14 +12,16 @@ import static io.restassured.RestAssured.given;
 
 public class TotalPriceTests extends BaseApiTests {
 
+    private static final String PATH = "api/GetPrice";
+
     @Test
     public void getTotalPriceTest() {
 
-        given().baseUri(BASE_URL)
+        given().baseUri(FUNCTION_URL)
                 .queryParam("code", KEY)
                 .when()
                 .log().all()
-                .get()
+                .get(PATH)
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -36,21 +38,23 @@ public class TotalPriceTests extends BaseApiTests {
         IngredientItem ingredientItem1 = new IngredientItem();
         ingredientItem1.setName("Tomato");
         ingredientItem1.setQuantity(6);
+        ingredientItem1.setPrice(10);
 
         IngredientItem ingredientItem2 = new IngredientItem();
         ingredientItem2.setName("Cheese");
         ingredientItem2.setQuantity(1);
+        ingredientItem2.setPrice(2);
 
         ingredientsRequest.setIngredients(List.of(ingredientItem1, ingredientItem2));
         ingredientsRequest.setRegion("Aurelia");
 
-        PriceResponse response = given().baseUri(BASE_URL)
+        PriceResponse response = given().baseUri(FUNCTION_URL)
                 .contentType(ContentType.JSON)
                 .queryParam("code", KEY)
                 .body(ingredientsRequest)
                 .when()
                 .log().all()
-                .post()
+                .post(PATH)
                 .then()
                 .log().all()
                 .statusCode(200)
