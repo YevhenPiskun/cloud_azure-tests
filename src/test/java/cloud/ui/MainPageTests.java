@@ -18,22 +18,22 @@ public class MainPageTests extends BaseUiTests {
     public void verifyAllMenuItems() {
         mainPage.openMainPage();
         mainPage.generalMenuIsVisible();
-        $(By.xpath("//a[@href=\"/\"]")).shouldHave(text("Pizza Catalog"));
-        $(By.xpath("//a[@href=\"/our_ingredients\"]")).shouldHave(text("Our Ingredients"));
-        $(By.xpath("//p[@class=\"menu-label\" and contains(text(),'Administration menu')]")).shouldBe(visible);
-        $(By.xpath("//a[@href=\"/settings\"]")).shouldHave(text("Site Settings"));
-        $(By.xpath("//a[@href=\"/pizzas\"]")).shouldHave(text("Manage Pizzas"));
-        $(By.xpath("//a[@href=\"/pizzas\" and text()='List']")).shouldBe(visible);
-        $(By.xpath("//a[@href=\"/pizzas/add\"]")).shouldHave(text("Add new"));
-        $(By.xpath("//a[@href=\"/ingredients\"]")).shouldHave(text("Manage Ingredients"));
-        $(By.xpath("//a[@href=\"/ingredients\" and text()='List']")).shouldBe(visible);
-        $(By.xpath("//a[@href=\"/ingredients/add\"]")).shouldHave(text("Add new"));
+        mainPage.pizzaCatalogMenuItemIsVisible();
+        mainPage.ourIngredientsMenuItemIsVisible();
+        mainPage.administrationMenuMenuTitleIsVisible();
+        mainPage.siteSettingsMenuItemIsVisible();
+        mainPage.managePizzasMenuItemIsVisible();
+        mainPage.managePizzasListMenuItemIsVisible();
+        mainPage.managePizzasAddNewMenuItemIsVisible();
+        mainPage.manageIngredientsMenuItemIsVisible();
+        mainPage.manageIngredientsListMenuItemIsVisible();
+        mainPage.manageIngredientsAddNewMenuItemIsVisible();
     }
 
     @Test
     public void addNewPizzaWithNewIngredient() {
         mainPage.openMainPage();
-        $(By.xpath("//a[@href=\"/ingredients/add\"]")).click();
+        mainPage.clickAddIngredients();
         titleField.setValue("Mozzarella");
         descriptionField.setValue("Mozzarella cheeze");
         submitButton.click();
