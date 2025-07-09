@@ -78,4 +78,12 @@ public class MainPage {
     public void clickAddIngredients() {
         MANAGE_INGREDIENTS_ADD_NEW_MENU_ITEM.click();
     }
+
+    public void clickListIngredients() {
+        MANAGE_INGREDIENTS_LIST_MENU_ITEM.click();
+    }
+
+    public void clickAddNewPizza() {
+        MANAGE_PIZZAS_ADD_NEW_MENU_ITEM.click();
+    }
 }

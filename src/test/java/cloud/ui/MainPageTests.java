@@ -11,8 +11,6 @@ import static com.codeborne.selenide.Selenide.$$;
 public class MainPageTests extends BaseUiTests {
 
     SelenideElement submitButton = $(By.xpath("//button[@type=\"submit\"]"));
-    SelenideElement titleField = $(By.xpath("//input[@name=\"title\"]"));
-    SelenideElement descriptionField = $(By.xpath("//textarea[@name=\"description\"]"));
 
     @Test
     public void verifyAllMenuItems() {
@@ -34,15 +32,13 @@ public class MainPageTests extends BaseUiTests {
     public void addNewPizzaWithNewIngredient() {
         mainPage.openMainPage();
         mainPage.clickAddIngredients();
-        titleField.setValue("Mozzarella");
-        descriptionField.setValue("Mozzarella cheeze");
-        submitButton.click();
-        $(By.xpath("//a[@href=\"/ingredients\" and text()='List']")).click();
-        $$(By.xpath("//table[@class=\"table\"]/tbody/tr")).last().shouldHave(partialText("Mozzarella"));
-        $(By.xpath("//a[@href=\"/pizzas/add\"]")).click();
-        titleField.setValue("Carbonara");
-        submitButton.click();
-        $(By.xpath("//a[@href=\"/pizzas\" and text()='List']")).click();
+        addIngredientPage.enterTitle("Mozzarella");
+        addIngredientPage.enterDescription("Mozzarella cheeze");
+        addIngredientPage.clickSubmitButton();
+        ingredientsListPage.lastIngredientHasTitle("Mozzarella");
+        mainPage.clickAddNewPizza();
+        addPizzaPage.enterTitle("Carbonara");
+        addPizzaPage.clickSubmitButton();
         $$(By.xpath("//table[@class=\"table\"]/tbody/tr"))
                 .get($$(By.xpath("//table[@class=\"table\"]/tbody/tr")).size() - 2)
                 .shouldHave(partialText("Carbonara (0 ing.)"));
