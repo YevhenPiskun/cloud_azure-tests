@@ -15,10 +15,10 @@ public class SiteSettingsTests extends BaseUiTests {
     @Test
     public void checkItemsPerPage() {
         mainPage.openMainPage();
-        $(By.xpath("//a[@href=\"/settings\"]")).shouldHave(text("Site Settings")).click();
-        String itemsPerPage = $(By.xpath("//input[@name=\"Catalog - items per page\"]")).getValue();
+        mainPage.clickSiteSettings();
+        String itemsPerPage = siteSettingsPage.getValueFromCatalogItemPerPageInputField();
         int expectedItemsPerPage = Integer.parseInt(Objects.requireNonNull(itemsPerPage));
-        $(By.xpath("//a[@href=\"/\"]")).shouldHave(text("Pizza Catalog")).click();
+        mainPage.clickPizzaCatalog();
         int actualItemsPerPage = $$(By.xpath("//div[@class=\"block\"]")).size();
         Assert.assertEquals(actualItemsPerPage, expectedItemsPerPage);
     }

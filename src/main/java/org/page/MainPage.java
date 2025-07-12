@@ -86,4 +86,12 @@ public class MainPage {
     public void clickAddNewPizza() {
         MANAGE_PIZZAS_ADD_NEW_MENU_ITEM.click();
     }
+
+    public void clickSiteSettings() {
+        SITE_SETTINGS_MENU_ITEM.click();
+    }
+
+    public void clickPizzaCatalog() {
+        PIZZA_CATALOG_MENU_ITEM.click();
+    }
 }

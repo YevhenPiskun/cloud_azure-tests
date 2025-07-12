@@ -12,7 +12,7 @@ repositories {
 dependencies {
     implementation 'org.aeonbits.owner:owner-java8:1.0.12'
     implementation 'io.rest-assured:rest-assured:5.5.2'
-    implementation 'com.codeborne:selenide:7.9.3'
+    implementation 'com.codeborne:selenide:7.9.4'
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
     testImplementation 'org.testng:testng:7.9.0'

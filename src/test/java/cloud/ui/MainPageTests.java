@@ -1,16 +1,8 @@
 package cloud.ui;
 
-import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
-
 public class MainPageTests extends BaseUiTests {
-
-    SelenideElement submitButton = $(By.xpath("//button[@type=\"submit\"]"));
 
     @Test
     public void verifyAllMenuItems() {
@@ -38,15 +30,12 @@ public class MainPageTests extends BaseUiTests {
         ingredientsListPage.lastIngredientHasTitle("Mozzarella");
         mainPage.clickAddNewPizza();
         addPizzaPage.enterTitle("Carbonara");
+        addPizzaPage.uploadImage();
         addPizzaPage.clickSubmitButton();
-        $$(By.xpath("//table[@class=\"table\"]/tbody/tr"))
-                .get($$(By.xpath("//table[@class=\"table\"]/tbody/tr")).size() - 2)
-                .shouldHave(partialText("Carbonara (0 ing.)"));
-        $$(By.xpath("//table[@class=\"table\"]/tbody/tr"))
-                .get($$(By.xpath("//table[@class=\"table\"]/tbody/tr")).size() - 2)
-                .$(By.xpath("//a[@data-title=\"Carbonara\" and contains(text(),'Add ingredient')]")).click();
-        $(By.xpath("//select[@name=\"ingredient_id\"]")).getOptions().last().click();
-        submitButton.click();
-        $$(By.xpath("//table[@class=\"table\"]/tbody/tr")).last().shouldHave(partialText("Carbonara (1 ing.)"));
+        pizzasListPage.lastPizzaHasTitle("Carbonara (0 ing.)");
+        pizzasListPage.clickLastAddIngredientButton();
+        pizzasListPage.chooseLastIngredientInList();
+        pizzasListPage.clickSubmitIngredientButton();
+        pizzasListPage.lastPizzaHasTitle("Carbonara (1 ing.)");
     }
 }
