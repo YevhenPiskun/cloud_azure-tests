@@ -12,8 +12,8 @@ public interface IProjectConfig extends Accessible {
     @Key("application.ip")
     String applicationIp();
 
-    @Key("function.url")
-    String functionUrl();
+    @Key("gateway.url")
+    String gatewayUrl();
 
     @Key("access.key")
     String accessKey();
