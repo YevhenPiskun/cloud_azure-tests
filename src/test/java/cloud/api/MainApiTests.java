@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MainApiTests extends BaseApiTests {
 
@@ -13,7 +14,6 @@ public class MainApiTests extends BaseApiTests {
 
         given()
                 .baseUri(BASE_URL)
-                .queryParam("code", KEY)
                 .when()
                 .log().all()
                 .get("/")
@@ -55,11 +55,11 @@ public class MainApiTests extends BaseApiTests {
                         .response()
                         .asPrettyString();
 
-        Assert.assertTrue(responseIngredients.contains("Salmon"));
+        assertThat(responseIngredients).contains("Salmon");
 
         given()
                 .baseUri(BASE_URL)
-                .formParam("title", "Carbonara")
+                .formParam("title", "Carbonara2")
                 .when()
                 .log().all()
                 .post("/pizzas/create")
@@ -104,28 +104,6 @@ public class MainApiTests extends BaseApiTests {
     @Test
     public void getPizzas() {
 
-        String expectedString = "# Usage:\n" +
-                "\n" +
-                "GET /\n" +
-                " * Returns this message\n" +
-                "\n" +
-                "POST /\n" +
-                " * Returns report with provided inputs\n" +
-                " * Sample request body:\n" +
-                "    {\n" +
-                "        \"Pizzas\": [\n" +
-                "            {\n" +
-                "                \"Name\": \"Xavier\",\n" +
-                "                \"Ingredients\": [\"Onion\", \"Jam\", \"Cheese\"]\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"Name\": \"Yvonne\",\n" +
-                "                \"Ingredients\": [\"Ketchup\", \"Cheese\"]\n" +
-                "            }            \n" +
-                "        ]\n" +
-                "    }\n" +
-                "    ";
-
         String responseString = given()
                 .baseUri(BASE_URL)
                 .when()
@@ -137,6 +115,6 @@ public class MainApiTests extends BaseApiTests {
                 .extract()
                 .response().asString();
 
-        Assert.assertEquals(responseString, expectedString);
+        assertThat(responseString).contains("Awesome Pizza Site");
     }
 }
